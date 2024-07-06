@@ -48,7 +48,7 @@ def encode_cat(x):
 
 df['ENCODE_CAT']= df['CATEGORY'].apply(lambda x:encode_cat(x))
 
-# Ensure that the dataframe index is reset
+# resets the index of a Dataframe, which menas it creatse a new range index starting from 0 to len(df)-1, old indexes are dropped
 df = df.reset_index(drop=True)
 
 
@@ -63,6 +63,7 @@ class NewsDataset(Dataset):
         self.max_len = max_len
 
     def __getitem__(self, index):
+         # uses integer-based indexing meaning index is treated as a position in the df. 0 selects the row at the specified index, TITLE column
         title = str(self.data.iloc[index, 0])
         title = " ".join(title.split())
         inputs = self.tokenizer.encode_plus(
@@ -80,7 +81,7 @@ class NewsDataset(Dataset):
         return {
             'ids': torch.tensor(ids, dtype=torch.long),
             'mask': torch.tensor(mask, dtype=torch.long),
-            'targets': torch.tensor(self.data.iloc[index, 2], dtype=torch.long)
+            'targets': torch.tensor(self.data.iloc[index, 2], dtype=torch.long) # same thing with iloc here, 2 means we access column 3
         }
 
     def __len__(self):
