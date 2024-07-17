@@ -9,7 +9,7 @@ import pandas as pd
 
 
 
-s3_path = 's3://hugging-face-multiclass-textclassification-bucket/training_data/newsCorpora.csv'
+s3_path = 'your-s3-uri-to-the-csv'
 
 df = pd.read_csv(s3_path, sep='\t',names=['ID','TITLE','URL','PUBLISHER','CATEGORY','STORY','HOSTNAME','TIMESTAMP'])
 
@@ -48,7 +48,7 @@ def encode_cat(x):
 
 df['ENCODE_CAT']= df['CATEGORY'].apply(lambda x:encode_cat(x))
 
-# resets the index of a Dataframe, which menas it creatse a new range index starting from 0 to len(df)-1, old indexes are dropped
+# resets the index of a Dataframe, which mens it creatse a new range index starting from 0 to len(df)-1, old indexes are dropped
 df = df.reset_index(drop=True)
 
 
@@ -301,7 +301,7 @@ def main():
 
     # Train loop
 
-    EPOCHS = 4
+    EPOCHS = 2
 
     for epoch in range(EPOCHS):
         print(f"starting epoch: {epoch}")
